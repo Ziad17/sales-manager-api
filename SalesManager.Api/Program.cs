@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseSwaggerTool();
 
-app.UseAutomaticMigration<BaseContext>();
+app.UseAutomaticMigration<DatabaseContext>();
 
 app.UseRouting();
 

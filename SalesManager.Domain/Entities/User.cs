@@ -12,10 +12,6 @@ namespace SalesManager.Domain.Entities
 
         public string Fullname { get; set; }
 
-        public string Avatar { get; set; }
-
-        public bool IsVerified { get; set; }
-
         public bool IsSuspend { get; set; }
 
         public bool IsDeleted { get; set; }

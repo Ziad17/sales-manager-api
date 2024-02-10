@@ -5,12 +5,12 @@ namespace SalesManager.Application.Persistence
 {
     public class DatabaseContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
-        public DatabaseContext(DbContextOptions<BaseContext> options)
+        public DatabaseContext(DbContextOptions<GenericContext> options)
             : base(options)
         {
         }
 
-        public DatabaseContext(DbContextOptions<BaseContext> options, IServiceProvider serviceProvider)
+        public DatabaseContext(DbContextOptions<GenericContext> options, IServiceProvider serviceProvider)
             : base(options, serviceProvider)
         {
         }

@@ -16,12 +16,12 @@ namespace SalesManager.Application.Persistence
         where TRole : IdentityRole<TKey>
         where TRoleClaim : IdentityRoleClaim<TKey>
     {
-        protected IdentityDbContext(DbContextOptions<BaseContext> options)
+        protected IdentityDbContext(DbContextOptions<GenericContext> options)
             : base(options)
         {
         }
 
-        protected IdentityDbContext(DbContextOptions<BaseContext> options, IServiceProvider serviceProvider)
+        protected IdentityDbContext(DbContextOptions<GenericContext> options, IServiceProvider serviceProvider)
             : base(options, serviceProvider)
         {
         }

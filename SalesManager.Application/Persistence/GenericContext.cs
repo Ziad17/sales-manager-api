@@ -5,17 +5,17 @@ using SalesManager.Domain;
 
 namespace SalesManager.Application.Persistence
 {
-    public class BaseContext : DbContext
+    public class GenericContext : DbContext, IGenericContext
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IDateTimeService _dateTimeService;
 
-        public BaseContext(DbContextOptions<BaseContext> options)
+        public GenericContext(DbContextOptions<GenericContext> options)
             : base(options)
         {
         }
 
-        public BaseContext(DbContextOptions<BaseContext> options, IServiceProvider serviceProvider)
+        public GenericContext(DbContextOptions<GenericContext> options, IServiceProvider serviceProvider)
             : base(options)
         {
             _currentUserService = serviceProvider.GetService<ICurrentUserService>();

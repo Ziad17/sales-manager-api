@@ -7,19 +7,19 @@ using Microsoft.Extensions.Options;
 
 namespace SalesManager.Application.Persistence
 {
-    public abstract class IdentityUserContext<TUser, TKey, TUserClaim, TUserLogin, TUserToken> : BaseContext
+    public abstract class IdentityUserContext<TUser, TKey, TUserClaim, TUserLogin, TUserToken> : GenericContext
         where TUser : IdentityUser<TKey>
         where TKey : IEquatable<TKey>
         where TUserClaim : IdentityUserClaim<TKey>
         where TUserLogin : IdentityUserLogin<TKey>
         where TUserToken : IdentityUserToken<TKey>
     {
-        protected IdentityUserContext(DbContextOptions<BaseContext> options)
+        protected IdentityUserContext(DbContextOptions<GenericContext> options)
             : base(options)
         {
         }
 
-        protected IdentityUserContext(DbContextOptions<BaseContext> options, IServiceProvider serviceProvider)
+        protected IdentityUserContext(DbContextOptions<GenericContext> options, IServiceProvider serviceProvider)
             : base(options, serviceProvider)
         {
         }

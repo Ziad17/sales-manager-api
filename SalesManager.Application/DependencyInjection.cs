@@ -38,7 +38,7 @@ namespace SalesManager.Application
         {
             var connectionString = configurations.GetConnectionString("Default");
 
-            services.AddDbContext<BaseContext>((_, options) =>
+            services.AddDbContext<IGenericContext, GenericContext>((_, options) =>
             {
                 options.UseNpgsql(connectionString!, builder =>
                 {
@@ -46,6 +46,8 @@ namespace SalesManager.Application
                     builder.ExecutionStrategy(dependencies => new NpgsqlRetryingExecutionStrategy(dependencies, 3));
                 });
             });
+
+            services.AddDbContext<DatabaseContext>();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
@@ -125,8 +127,8 @@ namespace SalesManager.Application
 
             services.AddIdentity<User, Role>()
                 .AddRoles<Role>()
-                .AddEntityFrameworkStores<BaseContext>()
-                .AddUserStore<UserStore<User, Role, BaseContext, Guid, UserClaim, UserRole, UserLogin, UserToken, RoleClaim>>()
+                .AddEntityFrameworkStores<DatabaseContext>()
+                .AddUserStore<UserStore<User, Role, DatabaseContext, Guid, UserClaim, UserRole, UserLogin, UserToken, RoleClaim>>()
                 .AddDefaultTokenProviders();
 
 
