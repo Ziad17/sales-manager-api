@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SalesManager.Application.Base;
 using SalesManager.Application.Base.Services;
+using SalesManager.Domain;
 
 namespace SalesManager.Application.Persistence
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityDbContext
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IDateTimeService _dateTimeService;
@@ -28,6 +29,12 @@ namespace SalesManager.Application.Persistence
                 Audit();
 
             return await base.SaveChangesAsync(cancellationToken);
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.HasDefaultSchema("SalesManager");
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         }
 
         private void Audit()

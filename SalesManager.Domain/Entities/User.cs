@@ -1,7 +1,6 @@
 ﻿using Ardalis.Specification;
 using Microsoft.AspNetCore.Identity;
 using SalesManager.Domain.Exceptions;
-using Vizage.Modules.Users.Domain.ValueObjects;
 
 namespace SalesManager.Domain.Entities
 {
@@ -19,6 +18,8 @@ namespace SalesManager.Domain.Entities
 
         public bool IsSuspend { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public DateTime CreationDate { get; set; }
 
         public RefreshToken RefreshToken { get; set; }
@@ -26,8 +27,6 @@ namespace SalesManager.Domain.Entities
         public DateTime UpdatedOn { get; set; }
 
         public DateTime LastLogin { get; set; }
-
-        public bool IsDeleted { get; set; }
 
 
         public void AssignRefreshToken(string tokenString, DateTime expireAt, DateTime now)

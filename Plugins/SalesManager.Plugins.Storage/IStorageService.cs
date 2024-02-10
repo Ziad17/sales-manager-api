@@ -1,8 +1,6 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
-namespace Vizage.Infrastructure.Storage
+namespace SalesManager.Plugins.Storage
 {
     public interface IStorageService
     {

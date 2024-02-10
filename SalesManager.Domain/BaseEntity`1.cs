@@ -1,6 +1,6 @@
 ﻿using Ardalis.Specification;
 
-namespace SalesManager.Application.Base
+namespace SalesManager.Domain
 {
     public abstract class BaseEntity<TKey> : IEntity<TKey>
     {

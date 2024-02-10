@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Vizage.Infrastructure.Storage;
 
 namespace SalesManager.Plugins.Storage
 {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Vizage.Infrastructure.Domain.Entities;
-using Vizage.Infrastructure.Domain.Guards;
-using Vizage.Infrastructure.Domain.Guards.Abstractions;
-
-namespace Vizage.Modules.Users.Domain.ValueObjects
+﻿namespace SalesManager.Domain.Entities
 {
     public class RefreshToken : ValueObject
     {
@@ -27,19 +21,16 @@ namespace Vizage.Modules.Users.Domain.ValueObjects
 
         public void SetValue(string value)
         {
-            Guard.Check.IfNullOrEmpty(value);
             Value = value;
         }
 
         public void SetExpireAt(DateTime expireAt)
         {
-            Guard.Check.IfDefault(expireAt);
             ExpireAt = expireAt;
         }
 
         public void SetCreatedAt(DateTime createdAt)
         {
-            Guard.Check.IfDefault(createdAt);
             CreatedAt = createdAt;
         }
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Vizage.Infrastructure.Storage
+namespace SalesManager.Plugins.Storage
 {
     public class StorageService : IStorageService
     {
