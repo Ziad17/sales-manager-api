@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using SalesManager.Application.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
+using SalesManager.Application.Base;
+using Microsoft.AspNetCore.Http.Features;
+using SalesManager.Application.Base.Services;
 
 namespace SalesManager.Application
 {
@@ -28,10 +31,25 @@ namespace SalesManager.Application
         {
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(AssemblyPointer));
+            services.AddSingleton<ExceptionMiddleware>();
+            services.AddTransient<IDateTimeService, DateTimeService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddSingleton<ISerializationService, SerializationService>();
             services.AddDateOnlyTimeOnlyStringConverters();
             services.AddMediatR(configuration =>
             {
                 configuration.RegisterServicesFromAssemblyContaining<AssemblyPointer>();
+            });
+        }
+
+        public static void AddFormOptions(IServiceCollection services, IConfiguration configurations)
+        {
+            services.Configure<FormOptions>(options =>
+            {
+                options.BufferBody = true;
+                options.BufferBodyLengthLimit = long.MaxValue;
+                options.KeyLengthLimit = int.MaxValue;
+                options.ValueLengthLimit = int.MaxValue;
             });
         }
     }
