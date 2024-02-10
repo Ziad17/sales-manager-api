@@ -24,5 +24,15 @@ namespace SalesManager.Application
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         }
 
+        public static void AddGenerics(IServiceCollection services, IConfiguration configurations)
+        {
+            services.AddHttpContextAccessor();
+            services.AddAutoMapper(typeof(AssemblyPointer));
+            services.AddDateOnlyTimeOnlyStringConverters();
+            services.AddMediatR(configuration =>
+            {
+                configuration.RegisterServicesFromAssemblyContaining<AssemblyPointer>();
+            });
+        }
     }
 }
