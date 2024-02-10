@@ -6,6 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 using SalesManager.Application.Base;
 using Microsoft.AspNetCore.Http.Features;
 using SalesManager.Application.Base.Services;
+using SalesManager.Plugins.Storage;
 
 namespace SalesManager.Application
 {
@@ -51,6 +52,11 @@ namespace SalesManager.Application
                 options.KeyLengthLimit = int.MaxValue;
                 options.ValueLengthLimit = int.MaxValue;
             });
+        }
+
+        public static void AddPlugins(IServiceCollection services, IConfiguration configurations)
+        {
+            services.AddStorage(configurations);
         }
     }
 }
