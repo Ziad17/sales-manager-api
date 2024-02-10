@@ -7,7 +7,7 @@ namespace SalesManager.Application.Persistence
     {
         public DatabaseContext CreateDbContext(string[] args)
         {
-            var builder = new DbContextOptionsBuilder<DatabaseContext>();
+            var builder = new DbContextOptionsBuilder<BaseContext>();
             builder.UseNpgsql("Host=localhost;Port=5432;Database=sales-manager;Username=postgres;password=admin;");
             return new DatabaseContext(builder.Options);
         }

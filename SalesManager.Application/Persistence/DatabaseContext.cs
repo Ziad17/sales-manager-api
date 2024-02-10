@@ -1,60 +1,25 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using SalesManager.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using SalesManager.Application.Base.Services;
-using SalesManager.Domain;
 
 namespace SalesManager.Application.Persistence
 {
-    public class DatabaseContext : IdentityDbContext
+    public class DatabaseContext : IdentityDbContext<User, Role, Guid, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
-        private readonly ICurrentUserService _currentUserService;
-        private readonly IDateTimeService _dateTimeService;
-
-        public DatabaseContext(DbContextOptions<DatabaseContext> options)
+        public DatabaseContext(DbContextOptions<BaseContext> options)
             : base(options)
         {
         }
 
-        public DatabaseContext(DbContextOptions<DatabaseContext> options, IServiceProvider serviceProvider)
-            : base(options)
+        public DatabaseContext(DbContextOptions<BaseContext> options, IServiceProvider serviceProvider)
+            : base(options, serviceProvider)
         {
-            _currentUserService = serviceProvider.GetService<ICurrentUserService>();
-            _dateTimeService = serviceProvider.GetRequiredService<IDateTimeService>();
         }
 
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            if (_currentUserService != null)
-                Audit();
-
-            return await base.SaveChangesAsync(cancellationToken);
-        }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.HasDefaultSchema("SalesManager");
-            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-        }
-
-        private void Audit()
-        {
-            foreach (var entry in ChangeTracker.Entries<BaseEntity>().ToList())
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Modified:
-                        entry.Entity.SetModifiedById(_currentUserService.UserId(Guid.Empty));
-                        entry.Entity.SetModificationDate(_dateTimeService.Now());
-                        entry.Entity.SetModifiedByName(_currentUserService.UserName(string.Empty));
-                        break;
-                    case EntityState.Added:
-                        entry.Entity.SetCreatedById(_currentUserService.UserId(Guid.Empty));
-                        entry.Entity.SetCreationDate(_dateTimeService.Now());
-                        entry.Entity.SetCreatedByName(_currentUserService.UserName(string.Empty));
-                        break;
-                }
-            }
+            base.OnModelCreating(builder);
+            builder.HasDefaultSchema("SalesManager");
+            builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         }
     }
 }

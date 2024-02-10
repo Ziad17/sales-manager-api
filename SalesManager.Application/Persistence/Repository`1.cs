@@ -6,7 +6,7 @@ namespace SalesManager.Application.Persistence
     public class Repository<T> : RepositoryBase<T>, IRepository<T>
         where T : class
     {
-        public Repository(DatabaseContext context)
+        public Repository(BaseContext context)
             : base(context)
         {
         }

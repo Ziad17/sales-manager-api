@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 #pragma warning disable CS0618
@@ -17,12 +16,12 @@ namespace SalesManager.Application.Persistence
         where TRole : IdentityRole<TKey>
         where TRoleClaim : IdentityRoleClaim<TKey>
     {
-        protected IdentityDbContext(DbContextOptions<DatabaseContext> options)
+        protected IdentityDbContext(DbContextOptions<BaseContext> options)
             : base(options)
         {
         }
 
-        protected IdentityDbContext(DbContextOptions<DatabaseContext> options, IServiceProvider serviceProvider)
+        protected IdentityDbContext(DbContextOptions<BaseContext> options, IServiceProvider serviceProvider)
             : base(options, serviceProvider)
         {
         }
