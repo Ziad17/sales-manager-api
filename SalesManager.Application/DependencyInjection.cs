@@ -14,12 +14,41 @@ using SalesManager.Application.Configurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using SalesManager.Application.Extensions;
+using SalesManager.Application.Specifications.Admins;
 using SalesManager.Domain.Entities;
 
 namespace SalesManager.Application
 {
     public static class DependencyInjection
     {
+        public static async Task EnsureSuperAdminExists(this IServiceCollection services)
+        {
+            try
+            {
+                var repository = services.BuildServiceProvider().GetRequiredService<IRepository<Admin>>();
+
+                var superAdminExists = await repository.AnyAsync(new AdminSpecifications().Id(Admin.SuperAdmin.Id));
+
+                if (!superAdminExists)
+                {
+                    var userManager = services.BuildServiceProvider().GetRequiredService<UserManager<User>>();
+
+                    var userRolesRepository = services.BuildServiceProvider().GetRequiredService<IRepository<UserRole>>();
+
+                    var creationConfiguration = services.BuildServiceProvider().GetRequiredService<UserCreationConfiguration>();
+
+                    await userManager.CreateAsync(Admin.SuperAdmin, creationConfiguration.AdminPassword);
+
+                    await userRolesRepository.AddAsync(new UserRole(Role.Admin.Id, Admin.SuperAdmin.Id));
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+        }
+
         public static void AddApplication(this IServiceCollection services)
         {
             var configurations = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
@@ -32,7 +61,6 @@ namespace SalesManager.Application
             services.AddPlugins(configurations);
             services.AddSwagger();
         }
-
 
         public static void AddPersistence(this IServiceCollection services, IConfiguration configurations)
         {

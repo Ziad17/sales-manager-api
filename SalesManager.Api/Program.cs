@@ -17,6 +17,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication();
 
+await builder.Services.EnsureSuperAdminExists();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

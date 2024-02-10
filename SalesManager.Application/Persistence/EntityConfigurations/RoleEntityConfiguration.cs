@@ -9,6 +9,11 @@ namespace SalesManager.Application.Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.ToTable("Roles");
+
+            builder.HasData(new List<Role>()
+            {
+                Role.Admin,Role.Driver
+            });
         }
     }
 }

@@ -10,6 +10,13 @@ namespace SalesManager.Domain.Entities
         {
         }
 
+        public User(Guid id, string username, string fullname)
+        {
+            Id = id;
+            Fullname = fullname;
+            UserName = username;
+        }
+
         public string Fullname { get; set; }
 
         public bool IsSuspend { get; set; }
