@@ -14,6 +14,7 @@ using SalesManager.Application.Configurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using SalesManager.Application.Extensions;
+using SalesManager.Application.Services;
 using SalesManager.Application.Specifications.Admins;
 using SalesManager.Domain.Entities;
 
@@ -89,6 +90,8 @@ namespace SalesManager.Application
             services.AddValidatorsFromAssemblyContaining<AssemblyPointer>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddSingleton<ISerializationService, SerializationService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IAdminsService, AdminsService>();
             services.AddDateOnlyTimeOnlyStringConverters();
             services.AddMediatR(configuration =>
             {

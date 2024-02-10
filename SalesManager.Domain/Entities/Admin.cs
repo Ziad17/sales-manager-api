@@ -15,6 +15,6 @@
         public bool IsSuperAdmin { get; set; }
 
         public static Admin SuperAdmin =>
-            new Admin(Guid.Parse("0b51dfed-a2c3-4155-b37b-9ef91ada5239"), "admin", "P@ssw0rd");
+            new Admin(Guid.Parse("0b51dfed-a2c3-4155-b37b-9ef91ada5239"), "admin", "SuperAdmin");
     }
 }
