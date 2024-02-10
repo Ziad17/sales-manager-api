@@ -1,6 +1,4 @@
-﻿using Vizage.Infrastructure.Exceptions.Models;
-
-namespace Vizage.Infrastructure.Exceptions
+﻿namespace SalesManager.Domain.Exceptions
 {
     /// <summary>
     /// the base domain exception

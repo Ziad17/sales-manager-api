@@ -1,4 +1,4 @@
-﻿namespace Vizage.Infrastructure.Exceptions.Models
+﻿namespace SalesManager.Domain.Exceptions
 {
     /// <summary>
     /// the error property object

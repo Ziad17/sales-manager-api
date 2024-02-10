@@ -10,11 +10,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using SalesManager.Application;
-using Vizage.Infrastructure.Exceptions;
-using Vizage.Infrastructure.Exceptions.Models;
+using SalesManager.Application.Base.Services;
+using SalesManager.Domain.Exceptions;
 
-namespace Vizage.Infrastructure.Middleware.Exceptions
+namespace SalesManager.Application.Base
 {
     public class ExceptionMiddleware : IMiddleware
     {

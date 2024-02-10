@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 
-namespace Vizage.Infrastructure.Exceptions.Models
+namespace SalesManager.Domain.Exceptions
 {
     /// <summary>
     /// the exception response model

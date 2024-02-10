@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace SalesManager.Application
+namespace SalesManager.Application.Base.Services
 {
     public interface ISerializationService
     {

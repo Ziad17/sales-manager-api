@@ -2,7 +2,7 @@
 using Microsoft.Net.Http.Headers;
 using System.Security.Claims;
 
-namespace SalesManager.Application
+namespace SalesManager.Application.Base.Services
 {
     public class CurrentUserService : ICurrentUserService
     {

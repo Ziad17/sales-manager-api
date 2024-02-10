@@ -1,4 +1,4 @@
-﻿namespace SalesManager.Application
+﻿namespace SalesManager.Application.Base.Services
 {
     public interface ICurrentUserService
     {

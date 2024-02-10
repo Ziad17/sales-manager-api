@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Vizage.Infrastructure.Exceptions.Models
+﻿namespace SalesManager.Domain.Exceptions
 {
     /// <summary>
     /// validation error
