@@ -6,4 +6,8 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Ardalis.Specification" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="7.0.7"/>
+	</ItemGroup>
 </Project>

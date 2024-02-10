@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SalesManager.Application.Configurations;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using SalesManager.Domain.Entities;
 
 namespace SalesManager.Application
 {
@@ -105,6 +107,18 @@ namespace SalesManager.Application
                     }
                 };
             });
+
+            services.AddIdentity<User, Role>()
+                .AddRoles<Role>()
+                .AddEntityFrameworkStores<DatabaseContext>()
+                .AddUserStore<UserStore<User, Role, DatabaseContext, Guid, UserClaim, UserRole, UserLogin, UserToken, RoleClaim>>()
+                .AddDefaultTokenProviders();
+
+
+            services.AddAuthorization(options =>
+            {
+                //TODO:: add policies
+            });
         }
 
         public static void AddIdentityConfigurations(this IServiceCollection services, IConfiguration configurations)
@@ -141,6 +155,7 @@ namespace SalesManager.Application
                 options.User.RequireUniqueEmail = userCreationConfiguration.RequireUniqueEmail;
             });
         }
+
 
         public static void AddPlugins(IServiceCollection services, IConfiguration configurations)
         {
