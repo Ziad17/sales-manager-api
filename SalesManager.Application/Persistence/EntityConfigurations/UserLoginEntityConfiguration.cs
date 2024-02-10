@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SalesManager.Domain.Entities;
 
 namespace SalesManager.Application.Persistence.EntityConfigurations
 {

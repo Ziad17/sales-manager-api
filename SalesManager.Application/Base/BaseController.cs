@@ -9,24 +9,22 @@ using SalesManager.Application.Base.Services;
 
 namespace SalesManager.Application.Base
 {
+    [ApiController]
+    [Produces(MediaTypeNames.Application.Json)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class BaseController : ControllerBase
     {
-        [ApiController]
-        [Produces(MediaTypeNames.Application.Json)]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public class DefaultController : ControllerBase
-        {
-            private ICurrentUserService _currentUserService;
-            private IMediator _mediator;
-            private IHttpContextAccessor _contextAccessor;
 
-            protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+        private ICurrentUserService _currentUserService;
+        private IMediator _mediator;
+        private IHttpContextAccessor _contextAccessor;
 
-            protected ICurrentUserService CurrentUserService =>
-                _currentUserService ??= HttpContext.RequestServices.GetRequiredService<ICurrentUserService>();
+        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
-            protected IHttpContextAccessor HttpContextAccessor =>
-                _contextAccessor ??= HttpContext.RequestServices.GetRequiredService<IHttpContextAccessor>();
-        }
+        protected ICurrentUserService CurrentUserService =>
+            _currentUserService ??= HttpContext.RequestServices.GetRequiredService<ICurrentUserService>();
+
+        protected IHttpContextAccessor HttpContextAccessor =>
+            _contextAccessor ??= HttpContext.RequestServices.GetRequiredService<IHttpContextAccessor>();
     }
 }

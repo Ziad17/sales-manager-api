@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using System.Security.Claims;
+using SalesManager.Domain.Exceptions;
 
 namespace SalesManager.Application.Base.Services
 {
@@ -88,7 +89,7 @@ namespace SalesManager.Application.Base.Services
             var isAuthorized = _httpContextAccessor.HttpContext!.Request.Headers.TryGetValue(HeaderNames.Authorization, out var authorization);
 
             if (!isAuthorized)
-                throw new InvalidArgumentException(message: "authorization header must be supplied");
+                throw new DomainException(message: "authorization header must be supplied");
 
             return authorization.ToString()[7..];
         }
@@ -98,7 +99,7 @@ namespace SalesManager.Application.Base.Services
             var claim = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Actor)?.Value.ToString();
 
             if (claim is null)
-                throw new InvalidArgumentException(message: "no actor found in claims");
+                throw new DomainException(message: "no actor found in claims");
 
             return string.Equals(claim, actor, StringComparison.CurrentCultureIgnoreCase);
         }
@@ -108,5 +109,4 @@ namespace SalesManager.Application.Base.Services
             return _httpContextAccessor.HttpContext?.User.Identity is { IsAuthenticated: true };
         }
     }
-}
 }

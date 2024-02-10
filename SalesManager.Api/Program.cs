@@ -1,3 +1,6 @@
+using SalesManager.Application.Extensions;
+using SalesManager.Application.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +18,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAutomaticMigration<DatabaseContext>();
 
 app.UseHttpsRedirection();
 
