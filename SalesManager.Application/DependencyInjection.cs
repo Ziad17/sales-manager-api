@@ -13,17 +13,32 @@ using Microsoft.IdentityModel.Tokens;
 using SalesManager.Application.Configurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using SalesManager.Application.Extensions;
 using SalesManager.Domain.Entities;
 
 namespace SalesManager.Application
 {
     public static class DependencyInjection
     {
+        public static void AddApplication(this IServiceCollection services)
+        {
+            var configurations = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
+
+            services.AddPersistence(configurations);
+            services.AddGenerics(configurations);
+            services.AddFormOptions(configurations);
+            services.AddAuthentication(configurations);
+            services.AddIdentityConfigurations(configurations);
+            services.AddPlugins(configurations);
+            services.AddSwagger();
+        }
+
+
         public static void AddPersistence(this IServiceCollection services, IConfiguration configurations)
         {
             var connectionString = configurations.GetConnectionString("Default");
 
-            services.AddDbContext<DatabaseContext>((_, options) =>
+            services.AddDbContext<BaseContext>((_, options) =>
             {
                 options.UseNpgsql(connectionString!, builder =>
                 {
@@ -110,8 +125,8 @@ namespace SalesManager.Application
 
             services.AddIdentity<User, Role>()
                 .AddRoles<Role>()
-                .AddEntityFrameworkStores<DatabaseContext>()
-                .AddUserStore<UserStore<User, Role, DatabaseContext, Guid, UserClaim, UserRole, UserLogin, UserToken, RoleClaim>>()
+                .AddEntityFrameworkStores<BaseContext>()
+                .AddUserStore<UserStore<User, Role, BaseContext, Guid, UserClaim, UserRole, UserLogin, UserToken, RoleClaim>>()
                 .AddDefaultTokenProviders();
 
 
@@ -156,8 +171,7 @@ namespace SalesManager.Application
             });
         }
 
-
-        public static void AddPlugins(IServiceCollection services, IConfiguration configurations)
+        public static void AddPlugins(this IServiceCollection services, IConfiguration configurations)
         {
             services.AddStorage(configurations);
         }

@@ -1,27 +1,36 @@
+using SalesManager.Application;
 using SalesManager.Application.Extensions;
 using SalesManager.Application.Persistence;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Configuration.AddJsonFile("appsettings.local.json", true, true);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Host.UseSerilog(builder.ConfigureLogger());
+
+builder.Services.AddControllers().ConfigureJsonOptions();
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddApplication();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseSwaggerTool();
 
-app.UseAutomaticMigration<DatabaseContext>();
+app.UseAutomaticMigration<BaseContext>();
 
-app.UseHttpsRedirection();
+app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
